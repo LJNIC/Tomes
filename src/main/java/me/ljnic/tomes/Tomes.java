@@ -5,9 +5,12 @@ import com.google.inject.Inject;
 import me.ljnic.tomes.command.TomeCommand;
 import org.slf4j.Logger;
 import org.spongepowered.api.Sponge;
+import org.spongepowered.api.data.DataRegistration;
 import org.spongepowered.api.event.Listener;
+import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
 import org.spongepowered.api.event.game.state.GameStartedServerEvent;
 import org.spongepowered.api.plugin.Plugin;
+import org.spongepowered.api.plugin.PluginContainer;
 
 import java.io.IOException;
 
@@ -26,6 +29,20 @@ public class Tomes {
 
     @Inject
     private Logger logger;
+
+    @Inject
+    private PluginContainer container;
+
+    @Listener
+    public void onPreInit(GamePreInitializationEvent event) {
+        TomeKeys.TOME_COMMAND_DATA_REGISTRATION = DataRegistration.builder()
+                .dataClass(TomeData.class)
+                .immutableClass(TomeData.Immutable.class)
+                .builder(new TomeData.Builder())
+                .dataName("TomeCommand")
+                .manipulatorId("tomeCommand")
+                .buildAndRegister(this.container);
+    }
 
     @Listener
     public void onServerStart(GameStartedServerEvent event) {
