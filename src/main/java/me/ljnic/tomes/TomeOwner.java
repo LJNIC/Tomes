@@ -25,4 +25,12 @@ public class TomeOwner {
     public void grantTome(Tome tome, List<Integer> pages) {
         tomes.put(tome.getId(), new PlayerTome(tome, pages));
     }
+
+    public boolean addPages(Tome tome, List<Integer> newPages) {
+        if (tomes.containsKey(tome.getId()))  {
+            tomes.get(tome.getId()).addPages(newPages);
+            return true;
+        }
+        return false;
+    }
 }

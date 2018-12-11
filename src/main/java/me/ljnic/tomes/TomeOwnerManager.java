@@ -36,8 +36,13 @@ public class TomeOwnerManager {
         if (tome.isPresent()) {
             getOrCreate(player).grantTome(tome.get(), pageIds);
             return true;
-        } else {
-            return false;
         }
+        return false;
+    }
+
+    public boolean grantTomePages(Player player, String tomeId, List<Integer> pageIds) {
+        Optional<Tome> tome = Tomes.getConfig().getTome(tomeId);
+
+        return tome.filter(tome1 -> getOrCreate(player).addPages(tome1, pageIds)).isPresent();
     }
 }

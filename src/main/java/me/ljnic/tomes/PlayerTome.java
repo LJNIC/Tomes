@@ -39,6 +39,10 @@ public class PlayerTome implements Viewable {
         return new TomeView(viewPages);
     }
 
+    public void addPages(List<Integer> newPages) {
+        pages.addAll(newPages);
+    }
+
     public Tome getTome() {
         return tome;
     }
